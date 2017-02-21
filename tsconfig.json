@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "newLine": "LF"
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}

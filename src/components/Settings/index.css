@@ -1,0 +1,16 @@
+.settings {
+  width: 720px;
+  margin: 80px auto 0;
+
+  label {
+    display: block;
+  }
+
+  input {
+    display: block;
+    border: 0;
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+}

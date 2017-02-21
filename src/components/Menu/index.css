@@ -1,0 +1,39 @@
+.menu {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  border-top: 1px solid #eee;
+  position: absolute;
+  bottom: 0;
+
+  & > li {
+    flex: 1;
+    text-align: center;
+    border-right: 1px solid #eee;
+    list-style: none;
+    position: relative;
+
+    &:last-child {
+      border-right: 0;
+    }
+
+    b {
+      font-weight: 400;
+      line-height: 30px;
+    }
+  }
+}
+
+.subMenu {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 40px;
+
+  & > li {
+    list-style: none;
+  }
+}

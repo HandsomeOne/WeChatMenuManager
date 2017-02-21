@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  color: #333;
+}
+
+.container {
+  width: 720px;
+  margin: 80px auto 0;
+  height: 560px;
+  display: flex;
+}
+
+.phone {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+  border-radius: 6px;
+  width: 320px;
+  position: relative;
+}
+
+.panel {
+  flex: 1;
+}
+
+.save {
+  display: block;
+  margin: 40px auto;
+}
