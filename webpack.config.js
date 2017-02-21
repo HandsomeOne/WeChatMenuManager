@@ -45,14 +45,17 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: [
-          { loader: 'babel-loader',
+          {
+            loader: 'babel-loader',
             options: {
               presets: [
                 ['es2015', { modules: false }],
-              ]
-            } },
+              ],
+              plugins: ['react-hot-loader/babel'],
+            },
+          },
           'awesome-typescript-loader',
-        ]
+        ],
       },
       {
         test: /\.css$/,
@@ -80,7 +83,7 @@ module.exports = {
   plugins,
   externals: {
     "react": "React",
-    "react-dom": "ReactDOM"
+    "react-dom": "ReactDOM",
   },
   devServer: {
     contentBase: resolve(__dirname, 'dist'),
