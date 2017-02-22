@@ -4,9 +4,7 @@ import { assertTypeIsButtons } from '../../utils'
 
 interface SettingsProps {
   visible: boolean
-  setButtons: (buttons: Button[]) => void
-  setGetURL: (getURL: string) => void
-  setCreateURL: (createURL: string) => void
+  setState: (state: Pick<AppState, 'buttons' | 'getURL' | 'createURL'>) => void
   close: () => void
 }
 
@@ -42,9 +40,11 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
         this.getURL.value,
         this.createURL.value,
       ]))
-      this.props.setButtons(json.menu.button)
-      this.props.setGetURL(this.getURL.value)
-      this.props.setCreateURL(this.createURL.value)
+      this.props.setState({
+        buttons: json.menu.button,
+        getURL: this.getURL.value,
+        createURL: this.createURL.value,
+      })
       this.props.close()
     })
     .catch((e: Error) => {

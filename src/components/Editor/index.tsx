@@ -5,8 +5,7 @@ interface EditorProps {
   path: number[]
   buttons: Button[]
   mode: 'add' | 'update'
-  setPath: (path: number[]) => void
-  setButtons: (buttons: Button[]) => void
+  setState: (state: Pick<AppState, 'path' | 'buttons'>) => void
 }
 
 class Editor extends React.PureComponent<EditorProps, {}> {
@@ -33,8 +32,10 @@ class Editor extends React.PureComponent<EditorProps, {}> {
       newButtons[i].sub_button = newButtons[i].sub_button.filter((_, _j) => _j !== j)
     }
 
-    this.props.setButtons(newButtons)
-    this.props.setPath([])
+    this.props.setState({
+      buttons: newButtons,
+      path: [],
+    })
   }
 
   update(e: React.FormEvent<HTMLFormElement>) {
@@ -59,8 +60,10 @@ class Editor extends React.PureComponent<EditorProps, {}> {
       subButton.url = this.url.value
     }
 
-    this.props.setButtons(newButtons)
-    this.props.setPath([])
+    this.props.setState({
+      buttons: newButtons,
+      path: [],
+    })
   }
 
   add() {
@@ -86,8 +89,10 @@ class Editor extends React.PureComponent<EditorProps, {}> {
       })
     }
 
-    this.props.setButtons(newButtons)
-    this.props.setPath([])
+    this.props.setState({
+      buttons: newButtons,
+      path: [],
+    })
   }
 
   render() {

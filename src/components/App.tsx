@@ -5,15 +5,6 @@ import Menu from './Menu'
 import Editor from './Editor'
 import Settings from './Settings'
 
-interface AppState {
-  buttons: Button[]
-  path: number[]
-  mode: 'add' | 'update'
-  getURL: string
-  createURL: string
-  isSettingsVisible: boolean
-}
-
 class App extends React.PureComponent<{}, AppState> {
   constructor() {
     super()
@@ -35,11 +26,6 @@ class App extends React.PureComponent<{}, AppState> {
     }
     this.openSettings = this.openSettings.bind(this)
     this.closeSettings = this.closeSettings.bind(this)
-    this.setPath = this.setPath.bind(this)
-    this.setButtons = this.setButtons.bind(this)
-    this.setMode = this.setMode.bind(this)
-    this.setGetURL = this.setGetURL.bind(this)
-    this.setCreateURL = this.setCreateURL.bind(this)
     this.save = this.save.bind(this)
   }
 
@@ -63,24 +49,10 @@ class App extends React.PureComponent<{}, AppState> {
     this.setState({ isSettingsVisible: false })
   }
 
-  setPath(path: number[]) {
-    this.setState({ path })
-  }
-
-  setButtons(buttons: Button[]) {
-    this.setState({ buttons })
-  }
-
-  setMode(mode: 'add' | 'update') {
-    this.setState({ mode })
-  }
-
-  setGetURL(getURL: string) {
-    this.setState({ getURL })
-  }
-
-  setCreateURL(createURL: string) {
-    this.setState({ createURL })
+  delegateState<T extends keyof AppState>() {
+    return (state: Pick<AppState, T>) => {
+      this.setState(state)
+    }
   }
 
   save() {
@@ -95,9 +67,7 @@ class App extends React.PureComponent<{}, AppState> {
           <div className={$.phone}>
             <Menu
               buttons={this.state.buttons}
-              setPath={this.setPath}
-              setButtons={this.setButtons}
-              setMode={this.setMode}
+              setState={this.delegateState<'mode' | 'path'>()}
             />
           </div>
           <div className={$.panel}>
@@ -105,8 +75,7 @@ class App extends React.PureComponent<{}, AppState> {
               buttons={this.state.buttons}
               path={this.state.path}
               mode={this.state.mode}
-              setPath={this.setPath}
-              setButtons={this.setButtons}
+              setState={this.delegateState<'path' | 'buttons'>()}
             />
           </div>
         </div>
@@ -121,9 +90,7 @@ class App extends React.PureComponent<{}, AppState> {
 
         <Settings
           visible={!this.state.getURL || this.state.isSettingsVisible}
-          setButtons={this.setButtons}
-          setGetURL={this.setGetURL}
-          setCreateURL={this.setCreateURL}
+          setState={this.delegateState<'buttons' | 'getURL' | 'createURL'>()}
           close={this.closeSettings}
         />
       </div>
