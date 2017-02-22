@@ -7,6 +7,7 @@ interface SettingsProps {
   setButtons: (buttons: Button[]) => void
   setGetURL: (getURL: string) => void
   setCreateURL: (createURL: string) => void
+  close: () => void
 }
 
 interface SettingsState {
@@ -44,6 +45,7 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
       this.props.setButtons(json.menu.button)
       this.props.setGetURL(this.getURL.value)
       this.props.setCreateURL(this.createURL.value)
+      this.props.close()
     })
     .catch((e: Error) => {
       console.log(e)
@@ -51,6 +53,13 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
   }
 
   render() {
+    const hash = location.hash.slice(1)
+    let getURL = ''
+    let createURL = ''
+    try {
+      [getURL, createURL] = JSON.parse(atob(hash))
+    } catch (e) {}
+
     return (
       <div
         className={$.settings}
@@ -62,6 +71,7 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
             <input
               type="url"
               required
+              defaultValue={getURL}
               ref={(e) => { this.getURL = e }}
             />
           </label>
@@ -69,6 +79,7 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
             用于创建菜单的 URL (可稍后填写)
             <input
               type="url"
+              defaultValue={createURL}
               ref={(e) => { this.createURL = e }}
             />
           </label>

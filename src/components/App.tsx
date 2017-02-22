@@ -11,6 +11,7 @@ interface AppState {
   mode: 'add' | 'update'
   getURL: string
   createURL: string
+  isSettingsVisible: boolean
 }
 
 class App extends React.PureComponent<{}, AppState> {
@@ -30,7 +31,10 @@ class App extends React.PureComponent<{}, AppState> {
       mode: 'update',
       getURL,
       createURL,
+      isSettingsVisible: false,
     }
+    this.openSettings = this.openSettings.bind(this)
+    this.closeSettings = this.closeSettings.bind(this)
     this.setPath = this.setPath.bind(this)
     this.setButtons = this.setButtons.bind(this)
     this.setMode = this.setMode.bind(this)
@@ -49,6 +53,14 @@ class App extends React.PureComponent<{}, AppState> {
         })
       })
     }
+  }
+
+  openSettings() {
+    this.setState({ isSettingsVisible: true })
+  }
+
+  closeSettings() {
+    this.setState({ isSettingsVisible: false })
   }
 
   setPath(path: number[]) {
@@ -102,11 +114,17 @@ class App extends React.PureComponent<{}, AppState> {
           className={$.save}
           onClick={this.save}
         >保存</button>
+
+        <p>用于获取菜单的 URL {this.state.getURL}</p>
+        <p>用于创建菜单的 URL {this.state.createURL}</p>
+        <button onClick={() => this.setState({ isSettingsVisible: true })}>更改</button>
+
         <Settings
-          visible={!this.state.getURL}
+          visible={!this.state.getURL || this.state.isSettingsVisible}
           setButtons={this.setButtons}
           setGetURL={this.setGetURL}
           setCreateURL={this.setCreateURL}
+          close={this.closeSettings}
         />
       </div>
     )
