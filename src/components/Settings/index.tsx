@@ -4,15 +4,10 @@ import { assertTypeIsButtons } from '../../utils'
 
 interface SettingsProps {
   visible: boolean
-  setState: (state: Pick<AppState, 'buttons' | 'getURL' | 'createURL'>) => void
-  close: () => void
+  setState: (state: Partial<Pick<AppState, 'buttons' | 'getURL' | 'createURL' | 'isSettingsVisible'>>) => void
 }
 
-interface SettingsState {
-
-}
-
-class Settings extends React.PureComponent<SettingsProps, SettingsState> {
+class Settings extends React.PureComponent<SettingsProps, {}> {
   getURL: HTMLInputElement
   createURL: HTMLInputElement
 
@@ -44,8 +39,8 @@ class Settings extends React.PureComponent<SettingsProps, SettingsState> {
         buttons: json.menu.button,
         getURL: this.getURL.value,
         createURL: this.createURL.value,
+        isSettingsVisible: false,
       })
-      this.props.close()
     })
     .catch((e: Error) => {
       console.log(e)

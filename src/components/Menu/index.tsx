@@ -3,7 +3,7 @@ import $ from './index.css'
 
 interface MenuProps {
   buttons: Button[]
-  setState: (state: Pick<AppState, 'mode' | 'path'>) => void
+  setState: (state: Partial<Pick<AppState, 'mode' | 'path'>>) => void
 }
 
 class Menu extends React.PureComponent<MenuProps, {}> {

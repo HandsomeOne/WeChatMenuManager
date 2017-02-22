@@ -24,8 +24,6 @@ class App extends React.PureComponent<{}, AppState> {
       createURL,
       isSettingsVisible: false,
     }
-    this.openSettings = this.openSettings.bind(this)
-    this.closeSettings = this.closeSettings.bind(this)
     this.save = this.save.bind(this)
   }
 
@@ -39,14 +37,6 @@ class App extends React.PureComponent<{}, AppState> {
         })
       })
     }
-  }
-
-  openSettings() {
-    this.setState({ isSettingsVisible: true })
-  }
-
-  closeSettings() {
-    this.setState({ isSettingsVisible: false })
   }
 
   delegateState<T extends keyof AppState>() {
@@ -90,8 +80,7 @@ class App extends React.PureComponent<{}, AppState> {
 
         <Settings
           visible={!this.state.getURL || this.state.isSettingsVisible}
-          setState={this.delegateState<'buttons' | 'getURL' | 'createURL'>()}
-          close={this.closeSettings}
+          setState={this.delegateState<'buttons' | 'getURL' | 'createURL' | 'isSettingsVisible'>()}
         />
       </div>
     )
