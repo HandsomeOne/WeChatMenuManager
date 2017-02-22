@@ -37,12 +37,13 @@ class Editor extends React.PureComponent<EditorProps, {}> {
     this.props.setPath([])
   }
 
-  update() {
+  update(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
     if (this.props.mode === 'add') {
       return this.add()
     }
 
-    if (!(this.name.value && this.url.value)) {
+    if (!e.currentTarget.checkValidity()) {
       return
     }
 
@@ -97,13 +98,13 @@ class Editor extends React.PureComponent<EditorProps, {}> {
     const actions = (
       <div>
         {addMode || <button onClick={this.remove}>删除</button>}
-        <button type="submit" onClick={this.update}>保存</button>
+        <button type="submit">保存</button>
       </div>
     )
     switch (path.length) {
       case 1:
         return (
-          <form className={$.editor}>
+          <form className={$.editor} onSubmit={this.update}>
             <label>
               名称
               <input
@@ -118,7 +119,7 @@ class Editor extends React.PureComponent<EditorProps, {}> {
         )
       case 2:
         return (
-          <form className={$.editor}>
+          <form className={$.editor} onSubmit={this.update}>
             <label>
               名称
               <input
@@ -131,6 +132,7 @@ class Editor extends React.PureComponent<EditorProps, {}> {
             <label>
               URL
               <input
+                type="url"
                 key={mode + path.join(',')}
                 ref={(e) => { this.url = e }}
                 required

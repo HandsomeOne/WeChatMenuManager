@@ -77,7 +77,7 @@ class App extends React.PureComponent<{}, AppState> {
   }
 
   render() {
-    return this.state.getURL ? (
+    return (
       <div>
         <div className={$.container}>
           <div className={$.phone}>
@@ -102,13 +102,13 @@ class App extends React.PureComponent<{}, AppState> {
           className={$.save}
           onClick={this.save}
         >保存</button>
+        <Settings
+          visible={!this.state.getURL}
+          setButtons={this.setButtons}
+          setGetURL={this.setGetURL}
+          setCreateURL={this.setCreateURL}
+        />
       </div>
-    ) : (
-      <Settings
-        setButtons={this.setButtons}
-        setGetURL={this.setGetURL}
-        setCreateURL={this.setCreateURL}
-      />
     )
   }
 }
