@@ -3,8 +3,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0,0,0,0.8);
-  color: #fff;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.95) 20%, rgba(0,0,0,0.75) 60%, transparent);
   height: 100%;
 
   .main {
