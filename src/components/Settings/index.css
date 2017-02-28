@@ -20,4 +20,22 @@
     color: #999;
     margin: 0 0.5em;
   }
+
+  button {
+    float: left;
+  }
+}
+
+.error {
+  line-height: 50px;
+  color: #ff3c41;
+  animation: fadein 0.2s;
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

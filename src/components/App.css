@@ -48,7 +48,6 @@ input {
 button {
 	font-size: 1rem;
 	text-shadow: none;
-	line-height: 1.2;
 	display: inline-block;
 	border: 0;
 	outline: 0;
@@ -89,7 +88,7 @@ button {
 .save {
   display: block;
   width: 100%;
-  margin: 40px 0;
+  margin: 40px 0 80px;
   background-color: #343436;
   color: #999;
 

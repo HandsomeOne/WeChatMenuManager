@@ -2,36 +2,58 @@ import * as React from 'react'
 import $ from './index.css'
 import { assertTypeIsButtons } from '../../utils'
 
-interface SettingsProps {
+interface Props {
   getURL: string
   createURL: string
   isVisible: boolean
-  setState: (state: Partial<Pick<AppState, 'buttons' | 'getURL' | 'createURL' | 'isSettingsVisible'>>) => void
+  setState: (state: Partial<AppState>) => void
 }
 
-class Settings extends React.PureComponent<SettingsProps, {}> {
+interface State {
+  error: string
+  errorId: number
+}
+
+class Settings extends React.PureComponent<Props, State> {
   getURLInput: HTMLInputElement
   createURLInput: HTMLInputElement
+
+  state = {
+    error: '',
+    errorId: 0,
+  }
+
+  finish = (buttons?: Button[]) => {
+    location.hash = btoa(JSON.stringify([
+      this.getURLInput.value,
+      this.createURLInput.value,
+    ]))
+    this.setState({
+      error: '',
+    })
+    const state: Partial<AppState> = {
+      getURL: this.getURLInput.value,
+      createURL: this.createURLInput.value,
+      isSettingsVisible: false,
+    }
+    if (buttons) {
+      state.buttons = buttons
+    }
+    this.props.setState(state)
+  }
 
   check = () => {
     fetch(this.getURLInput.value)
     .then(res => res.json())
     .then(json => {
       assertTypeIsButtons(json)
-
-      location.hash = btoa(JSON.stringify([
-        this.getURLInput.value,
-        this.createURLInput.value,
-      ]))
-      this.props.setState({
-        buttons: json.menu.button,
-        getURL: this.getURLInput.value,
-        createURL: this.createURLInput.value,
-        isSettingsVisible: false,
-      })
+      this.finish(json.menu.buttons)
     })
     .catch((e: Error) => {
-      console.log(e)
+      this.setState({
+        errorId: this.state.errorId + 1,
+        error: e.toString()
+      })
     })
   }
 
@@ -48,15 +70,7 @@ class Settings extends React.PureComponent<SettingsProps, {}> {
     if (this.getURLInput.value !== this.props.getURL) {
       this.check()
     } else {
-      location.hash = btoa(JSON.stringify([
-        this.getURLInput.value,
-        this.createURLInput.value,
-      ]))
-      this.props.setState({
-        getURL: this.getURLInput.value,
-        createURL: this.createURLInput.value,
-        isSettingsVisible: false,
-      })
+      this.finish()
     }
   }
 
@@ -85,6 +99,9 @@ class Settings extends React.PureComponent<SettingsProps, {}> {
             ref={(e) => { this.createURLInput = e }}
           />
           <button type="submit">确认</button>
+          <p className={$.error} key={this.state.errorId}>{
+            this.state.error
+          }</p>
         </form>
       </div>
     )

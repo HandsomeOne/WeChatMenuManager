@@ -47,6 +47,12 @@ class App extends React.PureComponent<{}, AppState> {
   }
 
   save = () => {
+    if (!this.state.createURL) {
+      return this.setState({
+        isSettingsVisible: true,
+      })
+    }
+
     const data = { button: this.state.buttons }
     fetch(this.state.createURL, {
       method: 'POST',
@@ -94,7 +100,11 @@ class App extends React.PureComponent<{}, AppState> {
         <button
           className={$.save}
           onClick={this.save}
-        >保存所有更改并提交</button>
+        >{
+          this.state.createURL ?
+          '保存所有更改并提交' :
+          '请先填写用来创建菜单的 URL'
+        }</button>
 
         <Footer />
       </div>

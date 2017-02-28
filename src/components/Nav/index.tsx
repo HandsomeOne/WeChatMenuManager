@@ -3,7 +3,7 @@ import $ from './index.css'
 
 interface Props {
   isSettingsVisible: boolean
-  setState: (state: Partial<Pick<AppState, 'isSettingsVisible'>>) => void
+  setState: (state: Partial<AppState>) => void
 }
 
 class Nav extends React.PureComponent<Props, {}> {
