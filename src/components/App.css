@@ -1,7 +1,10 @@
+@import "https://fonts.proxy.ustclug.org/css?family=Lato:400";
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+  font-family: Lato;
 }
 body {
   background-color: #191919;
@@ -88,8 +91,10 @@ button {
   width: 100%;
   margin: 40px 0;
   background-color: #343436;
+  color: #999;
 
   &:hover {
     background: #0ebeff;
+    color: #111;
   }
 }
