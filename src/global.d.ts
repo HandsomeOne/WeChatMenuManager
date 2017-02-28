@@ -19,6 +19,11 @@ interface AppState {
   isSettingsVisible: boolean
 }
 
+declare const module: any
+declare const require: any
+declare module 'react-hot-loader' {
+  export const AppContainer: any
+}
 declare module '*.css' {
   const content: {
     [key: string]: string

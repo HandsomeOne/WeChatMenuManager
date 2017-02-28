@@ -10,7 +10,9 @@ const plugins = [
   }),
 ]
 if (!isProd) {
-  plugins.push(new webpack.HotModuleReplacementPlugin())
+  plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin())
 }
 
 module.exports = {
@@ -45,15 +47,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: [
-                ['es2015', { modules: false }],
-              ],
-              plugins: ['react-hot-loader/babel'],
-            },
-          },
+          'babel-loader',
           'awesome-typescript-loader',
         ],
       },
