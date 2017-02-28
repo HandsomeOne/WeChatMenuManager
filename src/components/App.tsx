@@ -46,8 +46,15 @@ class App extends React.PureComponent<{}, AppState> {
   }
 
   save() {
-    const data = JSON.stringify({ button: this.state.buttons }, null, 2)
-    console.log(data)
+    const data = { button: this.state.buttons }
+    fetch(this.state.createURL, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(json => {
+      alert(json.errmsg)
+    })
   }
 
   render() {
@@ -74,9 +81,11 @@ class App extends React.PureComponent<{}, AppState> {
           onClick={this.save}
         >保存</button>
 
-        <p>用于获取菜单的 URL {this.state.getURL}</p>
-        <p>用于创建菜单的 URL {this.state.createURL}</p>
-        <button onClick={() => this.setState({ isSettingsVisible: true })}>更改</button>
+        <div className={$.urls}>
+          <p>用于获取菜单的 URL {this.state.getURL}</p>
+          <p>用于创建菜单的 URL {this.state.createURL}</p>
+          <button onClick={() => this.setState({ isSettingsVisible: true })}>更改</button>
+        </div>
 
         <Settings
           visible={!this.state.getURL || this.state.isSettingsVisible}

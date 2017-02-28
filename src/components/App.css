@@ -37,3 +37,8 @@ input {
   display: block;
   margin: 40px auto;
 }
+
+.urls {
+  width: 720px;
+  margin: 0 auto;
+}
