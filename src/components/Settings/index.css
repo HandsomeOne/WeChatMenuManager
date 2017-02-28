@@ -1,13 +1,23 @@
 .settings {
   width: 100%;
   position: fixed;
+  z-index: 10;
   top: 0;
   left: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.95) 20%, rgba(0,0,0,0.75) 60%, transparent);
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.95) 20%,
+    rgba(0,0,0,0.75) 60%,
+    transparent);
   height: 100%;
+}
 
-  .main {
-    width: 720px;
-    margin: 80px auto;
+.main {
+  width: 800px;
+  margin: 80px auto;
+
+  small {
+    color: #999;
+    margin: 0 0.5em;
   }
 }

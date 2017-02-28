@@ -3,7 +3,7 @@ import $ from './index.css'
 import { assertTypeIsButtons } from '../../utils'
 
 interface SettingsProps {
-  visible: boolean
+  isVisible: boolean
   setState: (state: Partial<Pick<AppState, 'buttons' | 'getURL' | 'createURL' | 'isSettingsVisible'>>) => void
 }
 
@@ -11,12 +11,7 @@ class Settings extends React.PureComponent<SettingsProps, {}> {
   getURL: HTMLInputElement
   createURL: HTMLInputElement
 
-  constructor() {
-    super()
-    this.check = this.check.bind(this)
-  }
-
-  check(e: React.FormEvent<HTMLFormElement>) {
+  check = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!this.getURL.value) {
       return
@@ -58,26 +53,26 @@ class Settings extends React.PureComponent<SettingsProps, {}> {
     return (
       <div
         className={$.settings}
-        style={{ display: this.props.visible ? 'block' : 'none' }}
+        style={{ display: this.props.isVisible ? 'block' : 'none' }}
       >
         <form className={$.main} onSubmit={this.check}>
-          <label>
-            用于获取菜单的 URL
-            <input
-              type="url"
-              required
-              defaultValue={getURL}
-              ref={(e) => { this.getURL = e }}
-            />
+          <label htmlFor="getURL">用于获取菜单的 URL</label>
+          <input
+            name="getURL"
+            type="url"
+            required
+            defaultValue={getURL}
+            ref={(e) => { this.getURL = e }}
+          />
+          <label htmlFor="createURL">用于创建菜单的 URL
+            <small>(可稍后填写)</small>
           </label>
-          <label>
-            用于创建菜单的 URL (可稍后填写)
-            <input
-              type="url"
-              defaultValue={createURL}
-              ref={(e) => { this.createURL = e }}
-            />
-          </label>
+          <input
+            name="createURL"
+            type="url"
+            defaultValue={createURL}
+            ref={(e) => { this.createURL = e }}
+          />
           <button type="submit">确认</button>
         </form>
       </div>

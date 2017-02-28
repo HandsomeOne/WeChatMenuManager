@@ -1,3 +1,8 @@
-.editor {
-  padding-left: 40px;
+.del {
+  background: #ff3c41;
+  color: #fff;
+
+  &:hover {
+    background: #ff090f;
+  }
 }

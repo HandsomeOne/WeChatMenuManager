@@ -1,26 +1,18 @@
 import * as React from 'react'
 import $ from './index.css'
 
-interface EditorProps {
+interface Props {
   path: number[]
   buttons: Button[]
   mode: 'add' | 'update'
   setState: (state: Partial<Pick<AppState, 'path' | 'buttons'>>) => void
 }
 
-class Editor extends React.PureComponent<EditorProps, {}> {
+class Editor extends React.PureComponent<Props, {}> {
   name: HTMLInputElement
   url: HTMLInputElement
 
-  constructor(props: EditorProps) {
-    super(props)
-
-    this.remove = this.remove.bind(this)
-    this.update = this.update.bind(this)
-    this.add = this.add.bind(this)
-  }
-
-  remove() {
+  remove = () => {
     const { buttons, path } = this.props
     const [i, j] = path
 
@@ -38,7 +30,7 @@ class Editor extends React.PureComponent<EditorProps, {}> {
     })
   }
 
-  update(e: React.FormEvent<HTMLFormElement>) {
+  update = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (this.props.mode === 'add') {
       return this.add()
@@ -66,7 +58,7 @@ class Editor extends React.PureComponent<EditorProps, {}> {
     })
   }
 
-  add() {
+  add = () => {
     if (!this.name.value) {
       return
     }
@@ -102,48 +94,53 @@ class Editor extends React.PureComponent<EditorProps, {}> {
     const addMode = mode === 'add'
     const actions = (
       <div>
-        {addMode || <button onClick={this.remove}>删除</button>}
-        <button type="submit">保存</button>
+        {addMode || <button
+          onClick={this.remove}
+          className={$.del}
+        >删除</button>}
+        <button
+          type="submit"
+          className={addMode ? $.add : $.save}
+        >
+          {addMode ? '新增' : '保存'}
+        </button>
       </div>
     )
     switch (path.length) {
       case 1:
         return (
           <form className={$.editor} onSubmit={this.update}>
-            <label>
-              名称
-              <input
-                key={mode + path.join(',')}
-                ref={(e) => { this.name = e }}
-                required
-                defaultValue={addMode ? '' : buttons[i].name}
-              />
-            </label>
+            <label htmlFor="name">名称</label>
+            <input
+              name="name"
+              key={mode + path.join(',')}
+              ref={(e) => { this.name = e }}
+              required
+              defaultValue={addMode ? '' : buttons[i].name}
+            />
             {actions}
           </form>
         )
       case 2:
         return (
           <form className={$.editor} onSubmit={this.update}>
-            <label>
-              名称
-              <input
-                key={mode + path.join(',')}
-                ref={(e) => { this.name = e }}
-                required
-                defaultValue={addMode ? '' : buttons[i].sub_button[j].name}
-              />
-            </label>
-            <label>
-              URL
-              <input
-                type="url"
-                key={mode + path.join(',')}
-                ref={(e) => { this.url = e }}
-                required
-                defaultValue={addMode ? '' : buttons[i].sub_button[j].url}
-              />
-            </label>
+            <label htmlFor="name">名称</label>
+            <input
+              name="name"
+              key={mode + path.join(',')}
+              ref={(e) => { this.name = e }}
+              required
+              defaultValue={addMode ? '' : buttons[i].sub_button[j].name}
+            />
+            <label htmlFor="url">URL</label>
+            <input
+              type="url"
+              name="url"
+              key={mode + path.join(',') + 'url'}
+              ref={(e) => { this.url = e }}
+              required
+              defaultValue={addMode ? '' : buttons[i].sub_button[j].url}
+            />
             {actions}
           </form>
         )

@@ -11,6 +11,7 @@
     text-align: center;
     list-style: none;
     position: relative;
+    background-color: #111;
 
     b {
       font-weight: 400;
@@ -26,8 +27,13 @@
   width: 100%;
   left: 0;
   bottom: 40px;
+  color: #999;
 
   & > li {
     list-style: none;
   }
+}
+
+.add {
+  color: #0ebeff;
 }

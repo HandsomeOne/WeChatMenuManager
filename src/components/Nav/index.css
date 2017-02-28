@@ -1,0 +1,48 @@
+.nav {
+  position: fixed;
+  z-index: 20;
+  width: 800px;
+  top: 0;
+  left: calc(50% - 400px);
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+
+  a {
+    display: inline-block;
+    height: 48px;
+    width: 48px;
+    line-height: 48px;
+    margin: 0;
+    padding: 0;
+    border-radius: 50%;
+    background: #343436;
+	  text-align: center;
+
+    &:hover {
+      background: #4d4d50;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: white;
+    }
+
+    &.help svg {
+      fill: #ae63e4;
+    }
+  }
+}
+
+.rotate:hover svg {
+  animation: rotate 1s linear infinite;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

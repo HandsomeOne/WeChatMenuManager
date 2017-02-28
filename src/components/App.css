@@ -1,12 +1,3 @@
-@font-face {
-	font-family: "Telefon Black";
-	src: url(https://production-assets.codepen.io/assets/telefon/black/3f32b1c9-8e26-465e-ae02-ff82a378b670-3-78992f1ed89d5cadb09702e6a0d5bbb0302e85c728c1f8d18fdc8aa56870104c.woff) format("woff"),url(https://production-assets.codepen.io/assets/telefon/black/3f32b1c9-8e26-465e-ae02-ff82a378b670-3-6435f1279663bb84d4a1d8effe0adafbf8499ff6efdd01a59be848c90d8c4c0b.woff2) format("woff2");
-}
-@font-face {
-	font-family: "Telefon";
-	src: url(https://production-assets.codepen.io/assets/telefon/bold/af889c53-1ee3-4868-8fdc-2b310d587b50-3-b7a87e0fbd213943fae0c0ef5985635dd43fa9c24876b2725127a13ccaf4ab6a.woff) format("woff"),url(https://production-assets.codepen.io/assets/telefon/bold/af889c53-1ee3-4868-8fdc-2b310d587b50-3-446e9e68a40500d1b24a18331c6d6a78226d276079dcdc2ad9e80a48bdcfd948.woff2) format("woff2");
-}
-
 * {
 	margin: 0;
 	padding: 0;
@@ -15,20 +6,32 @@
 body {
   background-color: #191919;
   color: #fff;
-  font-family: "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif;
 	line-height: 1.5;
 	font-size: 15px;
 	font-weight: 400;
+  width: 800px;
+  margin: 0 auto;
+}
+a {
+  text-decoration: none;
+  color: #76daff;
+
+  &:hover, &:focus, &:active {
+    cursor: pointer;
+    color: white;
+  }
 }
 label {
+  font-weight: normal;
   display: block;
+  margin: 0 0 3px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-input, textarea {
+input {
   margin-bottom: 24px;
   width: 100%;
-	font-family: "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif;
 	font-size: 13px;
-	-webkit-appearance: none;
 	padding: 4px 5px 4px 5px;
 	outline: 0;
 	border: 3px solid #ccc;
@@ -40,8 +43,6 @@ input, textarea {
   }
 }
 button {
-	font-family: "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif;
-	-webkit-appearance: none;
 	font-size: 1rem;
 	text-shadow: none;
 	line-height: 1.2;
@@ -53,8 +54,8 @@ button {
 	position: relative;
 	border-radius: 3px;
 	border: 3px solid transparent;
-  background-color: #343436;
-	color: white;
+  background: #ccc;
+  color: #111;
 	cursor: pointer;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -64,12 +65,11 @@ button {
 	font-weight: normal !important;
 
   &:hover {
-    background: #4d4d50;
+    background: #999;
   }
 }
 
 .container {
-  width: 720px;
   margin: 80px auto 0;
   height: 560px;
   display: flex;
@@ -81,27 +81,15 @@ button {
 }
 .panel {
   flex: 1;
+  margin-left: 40px;
 }
 .save {
   display: block;
-  width: 720px;
-  margin: 40px auto;
-}
-.showsettings {
-  height: 48px;
-  width: 48px;
-  margin: 0;
-  padding: 0;
-  border-radius: 50%;
-  position: fixed;
-  top: 12px;
-  left: calc(50% - 360px);
+  width: 100%;
+  margin: 40px 0;
+  background-color: #343436;
 
-  svg {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    vertical-align: middle;
-    fill: white;
+  &:hover {
+    background: #0ebeff;
   }
 }

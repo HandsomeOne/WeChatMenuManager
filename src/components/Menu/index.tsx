@@ -1,12 +1,12 @@
 import * as React from 'react'
 import $ from './index.css'
 
-interface MenuProps {
+interface Props {
   buttons: Button[]
   setState: (state: Partial<Pick<AppState, 'mode' | 'path'>>) => void
 }
 
-class Menu extends React.PureComponent<MenuProps, {}> {
+class Menu extends React.PureComponent<Props, {}> {
   render () {
     return (
       <ul className={$.menu}>
@@ -25,6 +25,7 @@ class Menu extends React.PureComponent<MenuProps, {}> {
               ))}
               {group.sub_button.length < 5 && (
                 <li
+                  className={$.add}
                   onClick={() => {
                     this.props.setState({
                       mode: 'add',
@@ -48,6 +49,7 @@ class Menu extends React.PureComponent<MenuProps, {}> {
         ))}
         {this.props.buttons.length < 3 && (
           <li
+            className={$.add}
             onClick={() => {
               this.props.setState({
                 mode: 'add',
