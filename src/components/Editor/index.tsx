@@ -9,8 +9,8 @@ interface Props {
 }
 
 class Editor extends React.PureComponent<Props, {}> {
-  name: HTMLInputElement
-  url: HTMLInputElement
+  nameInput: HTMLInputElement
+  urlInput: HTMLInputElement
 
   remove = () => {
     const { buttons, path } = this.props
@@ -45,11 +45,11 @@ class Editor extends React.PureComponent<Props, {}> {
 
     let newButtons = buttons.slice()
     if (path.length === 1) {
-      newButtons[i].name = this.name.value
+      newButtons[i].name = this.nameInput.value
     } else if (path.length === 2) {
       const subButton = newButtons[i].sub_button[j]
-      subButton.name = this.name.value
-      subButton.url = this.url.value
+      subButton.name = this.nameInput.value
+      subButton.url = this.urlInput.value
     }
 
     this.props.setState({
@@ -59,7 +59,7 @@ class Editor extends React.PureComponent<Props, {}> {
   }
 
   add = () => {
-    if (!this.name.value) {
+    if (!this.nameInput.value) {
       return
     }
 
@@ -69,14 +69,14 @@ class Editor extends React.PureComponent<Props, {}> {
     let newButtons = buttons.slice()
     if (path.length === 1) {
       newButtons.splice(i, 0, {
-        name: this.name.value,
+        name: this.nameInput.value,
         sub_button: [],
       })
     } else if (path.length === 2) {
       newButtons[i].sub_button.splice(j, 0, {
         type: 'view',
-        name: this.name.value,
-        url: this.url.value,
+        name: this.nameInput.value,
+        url: this.urlInput.value,
         sub_button: [],
       })
     }
@@ -113,8 +113,7 @@ class Editor extends React.PureComponent<Props, {}> {
             <label htmlFor="name">名称</label>
             <input
               name="name"
-              key={mode + path.join(',')}
-              ref={(e) => { this.name = e }}
+              ref={(e) => { this.nameInput = e }}
               required
               defaultValue={addMode ? '' : buttons[i].name}
             />
@@ -127,8 +126,7 @@ class Editor extends React.PureComponent<Props, {}> {
             <label htmlFor="name">名称</label>
             <input
               name="name"
-              key={mode + path.join(',')}
-              ref={(e) => { this.name = e }}
+              ref={(e) => { this.nameInput = e }}
               required
               defaultValue={addMode ? '' : buttons[i].sub_button[j].name}
             />
@@ -136,8 +134,7 @@ class Editor extends React.PureComponent<Props, {}> {
             <input
               type="url"
               name="url"
-              key={mode + path.join(',') + 'url'}
-              ref={(e) => { this.url = e }}
+              ref={(e) => { this.urlInput = e }}
               required
               defaultValue={addMode ? '' : buttons[i].sub_button[j].url}
             />

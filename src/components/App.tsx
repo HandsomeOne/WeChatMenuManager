@@ -67,6 +67,8 @@ class App extends React.PureComponent<{}, AppState> {
         />
 
         <Settings
+          getURL={this.state.getURL}
+          createURL={this.state.createURL}
           isVisible={!this.state.getURL || this.state.isSettingsVisible}
           setState={this.delegateState<'buttons' | 'getURL' | 'createURL' | 'isSettingsVisible'>()}
         />
@@ -80,6 +82,7 @@ class App extends React.PureComponent<{}, AppState> {
           </div>
           <div className={$.panel}>
             <Editor
+              key={this.state.mode + this.state.path}
               buttons={this.state.buttons}
               path={this.state.path}
               mode={this.state.mode}
