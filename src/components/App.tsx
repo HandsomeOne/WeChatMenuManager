@@ -26,6 +26,7 @@ class App extends React.PureComponent<{}, AppState> {
       getURL,
       createURL,
       isSettingsVisible: true,
+      isBusy: false,
     }
     this.setState = this.setState.bind(this)
   }
@@ -37,13 +38,15 @@ class App extends React.PureComponent<{}, AppState> {
       })
     }
 
-    const data = { button: this.state.buttons }
+    this.setState({ isBusy: true })
+
     fetch(this.state.createURL, {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify({ button: this.state.buttons }),
     })
     .then(res => res.text())
     .then(body => {
+      this.setState({ isBusy: false })
       try {
         const json = JSON.parse(body)
         if (json.errmsg === 'ok') {
@@ -67,6 +70,7 @@ class App extends React.PureComponent<{}, AppState> {
         })
       }
     }).catch((e: Error) => {
+      this.setState({ isBusy: false })
       Modal.confirm({
         type: 'error',
         title: '可能是接口异常...',
@@ -111,9 +115,10 @@ class App extends React.PureComponent<{}, AppState> {
         <button
           className={$.save}
           onClick={this.save}
+          disabled={this.state.isBusy}
         >{
           this.state.createURL ?
-          '保存所有更改并提交' :
+          (this.state.isBusy ? '提交中，请稍等...' : '保存所有更改并提交') :
           '请先填写用来创建菜单的 URL'
         }</button>
 

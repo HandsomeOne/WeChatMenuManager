@@ -17,6 +17,7 @@ interface AppState {
   getURL: string
   createURL: string
   isSettingsVisible: boolean
+  isBusy: boolean
 }
 
 declare const module: any
