@@ -156,7 +156,9 @@ class Editor extends React.PureComponent<Props, {}> {
             {actions}
           </form>
         )
-      default: return null
+      default: return (
+        <p className={$.default}>请在左侧面板中选择一个菜单项。</p>
+      )
     }
   }
 }

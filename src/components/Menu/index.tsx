@@ -14,7 +14,7 @@ class Menu extends React.PureComponent<Props, {}> {
         .filter(cls => cls !== $.highlight)
         .join(' ')
     }
-    e.className = $.highlight
+    e.className += ' ' + $.highlight
   }
 
   render () {
