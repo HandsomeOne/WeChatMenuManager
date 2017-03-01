@@ -7,6 +7,16 @@ interface Props {
 }
 
 class Menu extends React.PureComponent<Props, {}> {
+  static highlight(e: Element) {
+    const highlighted = document.querySelector(`.${$.highlight}`)
+    if (highlighted) {
+      highlighted.className = Array.from(highlighted.classList)
+        .filter(cls => cls !== $.highlight)
+        .join(' ')
+    }
+    e.className = $.highlight
+  }
+
   render () {
     return (
       <ul className={$.menu}>
@@ -15,7 +25,8 @@ class Menu extends React.PureComponent<Props, {}> {
             <ul className={$.subMenu}>
               {group.sub_button.map((button, j) => (
                 <li
-                  onClick={() => {
+                  onClick={(e) => {
+                    Menu.highlight(e.currentTarget)
                     this.props.setState({
                       mode: 'update',
                       path: [i, j],
@@ -26,7 +37,8 @@ class Menu extends React.PureComponent<Props, {}> {
               {group.sub_button.length < 5 && (
                 <li
                   className={$.add}
-                  onClick={() => {
+                  onClick={(e) => {
+                    Menu.highlight(e.currentTarget)
                     this.props.setState({
                       mode: 'add',
                       path: [i, group.sub_button.length],
@@ -35,22 +47,22 @@ class Menu extends React.PureComponent<Props, {}> {
                 >+</li>
               )}
             </ul>
-            <div
-              onClick={() => {
+            <h5
+              onClick={(e) => {
+                Menu.highlight(e.currentTarget)
                 this.props.setState({
                   mode: 'update',
                   path: [i],
                 })
               }}
-            >
-              <b>{group.name}</b>
-            </div>
+            >{group.name}</h5>
           </li>
         ))}
         {this.props.buttons.length < 3 && (
           <li
             className={$.add}
-            onClick={() => {
+            onClick={(e) => {
+              Menu.highlight(e.currentTarget)
               this.props.setState({
                 mode: 'add',
                 path: [this.props.buttons.length]
