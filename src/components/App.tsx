@@ -25,19 +25,7 @@ class App extends React.PureComponent<{}, AppState> {
       mode: 'update',
       getURL,
       createURL,
-      isSettingsVisible: false,
-    }
-  }
-
-  componentDidMount() {
-    if (this.state.getURL && !this.state.buttons.length) {
-      fetch(this.state.getURL)
-      .then(res => res.json())
-      .then((json) => {
-        this.setState({
-          buttons: json.menu.button,
-        })
-      })
+      isSettingsVisible: true,
     }
   }
 

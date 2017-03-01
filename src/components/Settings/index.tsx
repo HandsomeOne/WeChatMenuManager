@@ -9,12 +9,7 @@ interface Props {
   setState: (state: Partial<AppState>) => void
 }
 
-interface State {
-  error: string
-  errorId: number
-}
-
-class Settings extends React.PureComponent<Props, State> {
+class Settings extends React.PureComponent<Props, {}> {
   getURLInput: HTMLInputElement
   createURLInput: HTMLInputElement
 
@@ -47,12 +42,12 @@ class Settings extends React.PureComponent<Props, State> {
     .then(res => res.json())
     .then(json => {
       assertTypeIsButtons(json)
-      this.finish(json.menu.buttons)
+      this.finish(json.menu.button)
     })
     .catch((e: Error) => {
       this.setState({
         errorId: this.state.errorId + 1,
-        error: e.toString()
+        error: e.toString(),
       })
     })
   }
@@ -67,11 +62,15 @@ class Settings extends React.PureComponent<Props, State> {
       return
     }
 
-    if (this.getURLInput.value !== this.props.getURL) {
+    if (this.state.error || this.getURLInput.value !== this.props.getURL) {
       this.check()
     } else {
       this.finish()
     }
+  }
+
+  componentDidMount() {
+    this.check()
   }
 
   render() {
