@@ -16,6 +16,7 @@ class Settings extends React.PureComponent<Props, {}> {
   state = {
     error: '',
     errorId: 0,
+    isBusy: false,
   }
 
   finish = (buttons?: Button[]) => {
@@ -25,6 +26,7 @@ class Settings extends React.PureComponent<Props, {}> {
     ]))
     this.setState({
       error: '',
+      isBusy: false,
     })
     const state: Partial<AppState> = {
       getURL: this.getURLInput.value,
@@ -38,6 +40,8 @@ class Settings extends React.PureComponent<Props, {}> {
   }
 
   check = () => {
+    this.setState({ isBusy: true })
+
     fetch(this.getURLInput.value)
     .then(res => res.json())
     .then(json => {
@@ -48,6 +52,7 @@ class Settings extends React.PureComponent<Props, {}> {
       this.setState({
         errorId: this.state.errorId + 1,
         error: e.toString(),
+        isBusy: false,
       })
     })
   }
@@ -97,7 +102,9 @@ class Settings extends React.PureComponent<Props, {}> {
             defaultValue={this.props.createURL}
             ref={(e) => { this.createURLInput = e }}
           />
-          <button type="submit">确认</button>
+          <button type="submit" disabled={this.state.isBusy}>{
+            this.state.isBusy ? '请求中...' : '保存'
+          }</button>
           <p className={$.error} key={this.state.errorId}>{
             this.state.error
           }</p>

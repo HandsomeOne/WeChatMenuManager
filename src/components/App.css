@@ -61,13 +61,19 @@ button {
 	cursor: pointer;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	text-decoration: none !important;
+	text-decoration: none;
 	cursor: pointer;
 	text-align: center;
-	font-weight: normal !important;
+	font-weight: normal;
 
   &:hover {
     background: #999;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
   }
 }
 
