@@ -64,7 +64,6 @@ class App extends React.PureComponent<{}, AppState> {
         }
       } catch (e) {
         Modal.confirm({
-          type: 'neutral',
           title: '未知的返回格式',
           body: <pre>{body}</pre>,
         })
@@ -76,6 +75,20 @@ class App extends React.PureComponent<{}, AppState> {
         title: '可能是接口异常...',
         body: `详情为 ${e.toString()}，请打开网络面板查看。`,
       })
+    })
+  }
+
+  confirmSave = () => {
+    Modal.confirm({
+      type: 'info',
+      title: '请确认检查无误...',
+      body: (
+        <div>将提交
+          <pre>{JSON.stringify({ button: this.state.buttons })}</pre>
+          至 <code>{this.state.createURL}</code>
+        </div>
+      ),
+      onConfirm: this.save,
     })
   }
 
@@ -114,7 +127,7 @@ class App extends React.PureComponent<{}, AppState> {
 
         <button
           className={$.save}
-          onClick={this.save}
+          onClick={this.confirmSave}
           disabled={this.state.isBusy}
         >{
           this.state.createURL ?

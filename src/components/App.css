@@ -4,6 +4,8 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+body, input, button {
   font-family: Lato;
 }
 body {
@@ -23,6 +25,14 @@ a {
     cursor: pointer;
     color: white;
   }
+}
+pre {
+  white-space: pre-line;
+  background-color: #343436;
+  color: #fff;
+  font-size: 80%;
+  padding: 0.5em;
+  margin: 0.5em 0;
 }
 label {
   font-weight: normal;

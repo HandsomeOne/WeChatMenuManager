@@ -6,7 +6,7 @@ const root = document.createElement('div')
 document.body.appendChild(root)
 
 interface Props {
-  type: 'warning' | 'error' | 'good' | 'neutral'
+  type?: 'warning' | 'error' | 'good' | 'info'
   title: React.ReactNode
   body: React.ReactNode
   onConfirm?: () => void
@@ -27,7 +27,7 @@ class Modal extends React.PureComponent<Props, {}> {
     return this.state.isVisible ? (
       <div className={$.mask} onClick={this.close}>
         <div
-          className={[$.modal, $[this.props.type]].join(' ')}
+          className={[$.modal, $[this.props.type || '']].join(' ')}
           onClick={e => e.stopPropagation()}
         >
           <h1>{this.props.title}</h1>

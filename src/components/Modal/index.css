@@ -68,4 +68,14 @@
       }
     }
   }
+
+  &.info {
+    border-color: #76daff;
+    .confirm {
+      background-color: #0ebeff;
+      &:hover {
+        background-color: #009fda;
+      }
+    }
+  }
 }
