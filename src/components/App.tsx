@@ -6,6 +6,7 @@ import Menu from './Menu'
 import Editor from './Editor'
 import Settings from './Settings'
 import Footer from './Footer'
+import Modal from './Modal'
 
 class App extends React.PureComponent<{}, AppState> {
   constructor() {
@@ -58,9 +59,36 @@ class App extends React.PureComponent<{}, AppState> {
       method: 'POST',
       body: JSON.stringify(data),
     })
-    .then(res => res.json())
-    .then(json => {
-      alert(json.errmsg)
+    .then(res => res.text())
+    .then(body => {
+      try {
+        const json = JSON.parse(body)
+        if (json.errmsg === 'ok') {
+          Modal.confirm({
+            type: 'good',
+            title: '提交成功',
+            body: '请稍等片刻，等待菜单生效。'
+          })
+        } else {
+          Modal.confirm({
+            type: 'error',
+            title: '提交失败...',
+            body: <pre>{body}</pre>,
+          })
+        }
+      } catch (e) {
+        Modal.confirm({
+          type: 'neutral',
+          title: '未知的返回格式',
+          body: <pre>{body}</pre>,
+        })
+      }
+    }).catch((e: Error) => {
+      Modal.confirm({
+        type: 'error',
+        title: '可能是接口异常...',
+        body: `详情为 ${e.toString()}，请打开网络面板查看。`,
+      })
     })
   }
 
