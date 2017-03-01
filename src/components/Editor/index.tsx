@@ -1,5 +1,6 @@
 import * as React from 'react'
 import $ from './index.css'
+import Modal from '../Modal'
 
 interface Props {
   path: number[]
@@ -27,6 +28,19 @@ class Editor extends React.PureComponent<Props, {}> {
     this.props.setState({
       buttons: newButtons,
       path: [],
+    })
+  }
+
+  confirmRemove = () => {
+    const { buttons, path } = this.props
+    const [i, j] = path
+    const name = path.length === 1 ? buttons[i].name : buttons[i].sub_button[j].name
+
+    Modal.confirm({
+      type: 'warning',
+      title: `确认删除“${name}”？`,
+      body: '此操作不可撤销！',
+      onConfirm: this.remove,
     })
   }
 
@@ -95,7 +109,8 @@ class Editor extends React.PureComponent<Props, {}> {
     const actions = (
       <div>
         {addMode || <button
-          onClick={this.remove}
+          type="button"
+          onClick={this.confirmRemove}
           className={$.del}
         >删除</button>}
         <button

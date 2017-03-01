@@ -32,9 +32,10 @@ class Modal extends React.PureComponent<Props, {}> {
         >
           <h1>{this.props.title}</h1>
           <p>{this.props.body}</p>
-          <div className={$.buttons}>
+          <div className={$.buttons} >
             <button
-              onClick={this.props.onConfirm || this.close}
+              onClickCapture={this.close}
+              onClick={this.props.onConfirm}
               className={$.confirm}
             >确定</button>
             {this.props.onConfirm && (
