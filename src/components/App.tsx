@@ -27,12 +27,7 @@ class App extends React.PureComponent<{}, AppState> {
       createURL,
       isSettingsVisible: true,
     }
-  }
-
-  delegateState<T extends keyof AppState>() {
-    return (state: Pick<AppState, T>) => {
-      this.setState(state)
-    }
+    this.setState = this.setState.bind(this)
   }
 
   save = () => {
@@ -85,21 +80,21 @@ class App extends React.PureComponent<{}, AppState> {
       <div>
         <Nav
           isSettingsVisible={this.state.isSettingsVisible}
-          setState={this.delegateState<'isSettingsVisible'>()}
+          setState={this.setState}
         />
 
         <Settings
           getURL={this.state.getURL}
           createURL={this.state.createURL}
           isVisible={!this.state.getURL || this.state.isSettingsVisible}
-          setState={this.delegateState<'buttons' | 'getURL' | 'createURL' | 'isSettingsVisible'>()}
+          setState={this.setState}
         />
 
         <div className={$.container}>
           <div className={$.phone}>
             <Menu
               buttons={this.state.buttons}
-              setState={this.delegateState<'mode' | 'path'>()}
+              setState={this.setState}
             />
           </div>
           <div className={$.panel}>
@@ -108,7 +103,7 @@ class App extends React.PureComponent<{}, AppState> {
               buttons={this.state.buttons}
               path={this.state.path}
               mode={this.state.mode}
-              setState={this.delegateState<'path' | 'buttons'>()}
+              setState={this.setState}
             />
           </div>
         </div>

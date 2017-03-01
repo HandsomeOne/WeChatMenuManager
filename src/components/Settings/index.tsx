@@ -6,7 +6,7 @@ interface Props {
   getURL: string
   createURL: string
   isVisible: boolean
-  setState: (state: Partial<AppState>) => void
+  setState: (state: Partial<Pick<AppState, 'buttons' | 'getURL' | 'createURL' | 'isSettingsVisible'>>) => void
 }
 
 class Settings extends React.PureComponent<Props, {}> {

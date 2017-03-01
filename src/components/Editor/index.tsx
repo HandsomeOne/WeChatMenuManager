@@ -6,7 +6,7 @@ interface Props {
   path: number[]
   buttons: Button[]
   mode: 'add' | 'update'
-  setState: (state: Partial<AppState>) => void
+  setState: (state: Partial<Pick<AppState, 'path' | 'buttons'>>) => void
 }
 
 class Editor extends React.PureComponent<Props, {}> {
