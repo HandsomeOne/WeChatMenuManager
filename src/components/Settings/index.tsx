@@ -75,7 +75,9 @@ class Settings extends React.PureComponent<Props, {}> {
   }
 
   componentDidMount() {
-    this.check()
+    if (this.getURLInput.value) {
+      this.check()
+    }
   }
 
   render() {
