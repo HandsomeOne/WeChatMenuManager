@@ -6,31 +6,25 @@
         "sub_button": [
           {
             "type": "view",
-            "name": "甲",
+            "name": "甲已",
             "url": "http://www.example.com/",
             "sub_button": []
           },
           {
             "type": "view",
-            "name": "乙",
+            "name": "丙丁",
             "url": "http://www.example.com/",
             "sub_button": []
           },
           {
             "type": "view",
-            "name": "丙",
+            "name": "戊己庚",
             "url": "http://www.example.com/",
             "sub_button": []
           },
           {
             "type": "view",
-            "name": "丁",
-            "url": "http://www.example.com/",
-            "sub_button": []
-          },
-          {
-            "type": "view",
-            "name": "戊",
+            "name": "辛壬癸",
             "url": "http://www.example.com/",
             "sub_button": []
           }
@@ -41,19 +35,19 @@
         "sub_button": [
           {
             "type": "view",
-            "name": "子",
+            "name": "子丑寅卯",
             "url": "http://www.example.com/",
             "sub_button": []
           },
           {
             "type": "view",
-            "name": "丑",
+            "name": "辰巳午未",
             "url": "http://www.example.com/",
             "sub_button": []
           },
           {
             "type": "view",
-            "name": "寅",
+            "name": "申酉戌亥",
             "url": "http://www.example.com/",
             "sub_button": []
           }
