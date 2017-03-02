@@ -32,12 +32,6 @@ class App extends React.PureComponent<{}, AppState> {
   }
 
   save = () => {
-    if (!this.state.createURL) {
-      return this.setState({
-        isSettingsVisible: true,
-      })
-    }
-
     this.setState({ isBusy: true })
 
     fetch(this.state.createURL, {
@@ -79,6 +73,12 @@ class App extends React.PureComponent<{}, AppState> {
   }
 
   confirmSave = () => {
+    if (!this.state.createURL) {
+      return this.setState({
+        isSettingsVisible: true,
+      })
+    }
+
     Modal.confirm({
       type: 'info',
       title: '请确认检查无误...',
