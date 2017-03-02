@@ -6,7 +6,7 @@
         "sub_button": [
           {
             "type": "view",
-            "name": "甲已",
+            "name": "甲乙",
             "url": "http://www.example.com/",
             "sub_button": []
           },

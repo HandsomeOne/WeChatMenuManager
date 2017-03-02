@@ -87,7 +87,7 @@ class Settings extends React.PureComponent<Props, {}> {
         style={{ display: this.props.isVisible ? 'block' : 'none' }}
       >
         <form className={$.main} onSubmit={this.submit}>
-          <label htmlFor="getURL">用于获取菜单的 URL</label>
+          <label htmlFor="getURL">用来获取菜单的 URL</label>
           <input
             name="getURL"
             type="url"
@@ -95,7 +95,7 @@ class Settings extends React.PureComponent<Props, {}> {
             defaultValue={this.props.getURL}
             ref={(e) => { this.getURLInput = e }}
           />
-          <label htmlFor="createURL">用于创建菜单的 URL
+          <label htmlFor="createURL">用来创建菜单的 URL
             <small>(可稍后填写)</small>
           </label>
           <input
