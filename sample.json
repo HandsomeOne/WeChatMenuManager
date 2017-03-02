@@ -1,0 +1,58 @@
+{
+  "menu": {
+    "button": [
+      {
+        "name": "天干",
+        "sub_button": [
+          {
+            "type": "view",
+            "name": "甲已",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          },
+          {
+            "type": "view",
+            "name": "丙丁",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          },
+          {
+            "type": "view",
+            "name": "戊己庚",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          },
+          {
+            "type": "view",
+            "name": "辛壬癸",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          }
+        ]
+      },
+      {
+        "name": "地支",
+        "sub_button": [
+          {
+            "type": "view",
+            "name": "子丑寅卯",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          },
+          {
+            "type": "view",
+            "name": "辰巳午未",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          },
+          {
+            "type": "view",
+            "name": "申酉戌亥",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          }
+        ]
+      }
+    ]
+  }
+}
