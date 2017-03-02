@@ -6,7 +6,7 @@
   position: absolute;
   bottom: 0;
 
-  & > li {
+  > li {
     flex: 1;
     text-align: center;
     list-style: none;
@@ -18,6 +18,7 @@
       padding: 0;
       font-weight: 400;
       line-height: 30px;
+      cursor: pointer;
     }
   }
 
@@ -36,8 +37,9 @@
   bottom: 40px;
   color: #999;
 
-  & > li {
+  > li {
     list-style: none;
+    cursor: pointer;
   }
 }
 

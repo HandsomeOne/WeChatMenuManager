@@ -18,12 +18,14 @@ if (!isProd) {
 module.exports = {
   context: resolve(__dirname, 'src'),
   entry: isProd ? [
+    './sample.json',
     './index.html',
     './index.tsx',
   ] : [
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
+    './sample.json',
     './index.html',
     './index.tsx',
   ],
@@ -38,7 +40,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.html$/,
+        test: /\.html|json$/,
         loader: 'file-loader',
         options: {
           name: '[name].[ext]',

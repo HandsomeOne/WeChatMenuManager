@@ -1,0 +1,64 @@
+{
+  "menu": {
+    "button": [
+      {
+        "name": "天干",
+        "sub_button": [
+          {
+            "type": "view",
+            "name": "甲",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          },
+          {
+            "type": "view",
+            "name": "乙",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          },
+          {
+            "type": "view",
+            "name": "丙",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          },
+          {
+            "type": "view",
+            "name": "丁",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          },
+          {
+            "type": "view",
+            "name": "戊",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          }
+        ]
+      },
+      {
+        "name": "地支",
+        "sub_button": [
+          {
+            "type": "view",
+            "name": "子",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          },
+          {
+            "type": "view",
+            "name": "丑",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          },
+          {
+            "type": "view",
+            "name": "寅",
+            "url": "http://www.example.com/",
+            "sub_button": []
+          }
+        ]
+      }
+    ]
+  }
+}
