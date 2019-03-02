@@ -1,6 +1,4 @@
-export function assertTypeIsButtons(json: {
-  menu: { button: Button[] }
-}) {
+export default (json: { menu: { button: Button[] } }) => {
   if (!('menu' in json)) {
     throw new Error('没有 menu 字段，请检查菜单的返回体')
   }

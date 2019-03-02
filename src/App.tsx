@@ -1,12 +1,6 @@
 import React from 'react'
 import './App.scss'
-
-import Nav from './Nav'
-import Menu from './Menu'
-import Editor from './Editor'
-import Settings from './Settings'
-import Footer from './Footer'
-import Modal from './Modal'
+import { Modal, Nav, Settings, Menu, Editor, Footer } from './components'
 
 class App extends React.PureComponent<{}, AppState> {
   constructor(props: {}) {

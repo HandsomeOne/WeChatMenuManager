@@ -1,6 +1,6 @@
 import React from 'react'
 import './index.scss'
-import { assertTypeIsButtons } from '../../utils'
+import { assertTypeIsButtons } from '../../utils/'
 
 interface Props {
   getURL: string
