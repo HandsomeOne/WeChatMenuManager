@@ -1,5 +1,5 @@
-import * as React from 'react'
-import $ from './App.css'
+import React from 'react'
+import './App.scss'
 
 import Nav from './Nav'
 import Menu from './Menu'
@@ -9,15 +9,15 @@ import Footer from './Footer'
 import Modal from './Modal'
 
 class App extends React.PureComponent<{}, AppState> {
-  constructor() {
-    super()
+  constructor(props: {}) {
+    super(props)
 
     const hash = location.hash.slice(1)
     let getURL = ''
     let createURL = ''
     try {
-      [getURL, createURL] = JSON.parse(atob(hash))
-    } catch (e) { }
+      ;[getURL, createURL] = JSON.parse(atob(hash))
+    } catch (e) {}
 
     this.state = {
       buttons: [],
@@ -38,38 +38,39 @@ class App extends React.PureComponent<{}, AppState> {
       method: 'POST',
       body: JSON.stringify({ button: this.state.buttons }),
     })
-    .then(res => res.text())
-    .then(body => {
-      this.setState({ isBusy: false })
-      try {
-        const json = JSON.parse(body)
-        if (json.errmsg === 'ok') {
+      .then(res => res.text())
+      .then(body => {
+        this.setState({ isBusy: false })
+        try {
+          const json = JSON.parse(body)
+          if (json.errmsg === 'ok') {
+            Modal.confirm({
+              type: 'good',
+              title: '提交成功',
+              body: '请稍等片刻，等待菜单生效。',
+            })
+          } else {
+            Modal.confirm({
+              type: 'error',
+              title: '提交失败...',
+              body: <pre>{body}</pre>,
+            })
+          }
+        } catch (e) {
           Modal.confirm({
-            type: 'good',
-            title: '提交成功',
-            body: '请稍等片刻，等待菜单生效。'
-          })
-        } else {
-          Modal.confirm({
-            type: 'error',
-            title: '提交失败...',
+            title: '未知的返回格式',
             body: <pre>{body}</pre>,
           })
         }
-      } catch (e) {
-        Modal.confirm({
-          title: '未知的返回格式',
-          body: <pre>{body}</pre>,
-        })
-      }
-    }).catch((e: Error) => {
-      this.setState({ isBusy: false })
-      Modal.confirm({
-        type: 'error',
-        title: '可能是接口异常...',
-        body: `详情为 ${e.toString()}，请打开网络面板查看。`,
       })
-    })
+      .catch((e: Error) => {
+        this.setState({ isBusy: false })
+        Modal.confirm({
+          type: 'error',
+          title: '可能是接口异常...',
+          body: `详情为 ${e.toString()}，请打开网络面板查看。`,
+        })
+      })
   }
 
   confirmSave = () => {
@@ -83,9 +84,10 @@ class App extends React.PureComponent<{}, AppState> {
       type: 'info',
       title: '请确认检查无误...',
       body: (
-        <div>将提交
-          <pre>{JSON.stringify({ button: this.state.buttons })}</pre>
-          至 <code>{this.state.createURL}</code>
+        <div>
+          将提交
+          <pre>{JSON.stringify({ button: this.state.buttons })}</pre>至{' '}
+          <code>{this.state.createURL}</code>
         </div>
       ),
       onConfirm: this.save,
@@ -109,10 +111,7 @@ class App extends React.PureComponent<{}, AppState> {
 
         <div className={$.container}>
           <div className={$.phone}>
-            <Menu
-              buttons={this.state.buttons}
-              setState={this.setState}
-            />
+            <Menu buttons={this.state.buttons} setState={this.setState} />
           </div>
           <div className={$.panel}>
             <Editor
@@ -129,11 +128,13 @@ class App extends React.PureComponent<{}, AppState> {
           className={$.save}
           onClick={this.confirmSave}
           disabled={this.state.isBusy}
-        >{
-          this.state.createURL ?
-          (this.state.isBusy ? '提交中，请稍等...' : '保存所有更改并提交') :
-          '请先填写用来创建菜单的 URL'
-        }</button>
+        >
+          {this.state.createURL
+            ? this.state.isBusy
+              ? '提交中，请稍等...'
+              : '保存所有更改并提交'
+            : '请先填写用来创建菜单的 URL'}
+        </button>
 
         <Footer />
       </div>

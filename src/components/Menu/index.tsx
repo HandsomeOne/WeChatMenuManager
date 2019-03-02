@@ -1,9 +1,9 @@
-import * as React from 'react'
-import $ from './index.css'
+import React from 'react'
+import './index.scss'
 
 interface Props {
   buttons: Button[]
-  setState: (state: Partial<Pick<AppState, 'mode' | 'path'>>) => void
+  setState: any
 }
 
 class Menu extends React.PureComponent<Props, {}> {
@@ -17,7 +17,7 @@ class Menu extends React.PureComponent<Props, {}> {
     e.className += ' ' + $.highlight
   }
 
-  render () {
+  render() {
     return (
       <ul className={$.menu}>
         {this.props.buttons.map((group, i) => (
@@ -25,50 +25,58 @@ class Menu extends React.PureComponent<Props, {}> {
             <ul className={$.subMenu}>
               {group.sub_button.map((button, j) => (
                 <li
-                  onClick={(e) => {
+                  onClick={e => {
                     Menu.highlight(e.currentTarget)
                     this.props.setState({
                       mode: 'update',
                       path: [i, j],
                     })
                   }}
-                >{button.name}</li>
+                >
+                  {button.name}
+                </li>
               ))}
               {group.sub_button.length < 5 && (
                 <li
                   className={$.add}
-                  onClick={(e) => {
+                  onClick={e => {
                     Menu.highlight(e.currentTarget)
                     this.props.setState({
                       mode: 'add',
                       path: [i, group.sub_button.length],
                     })
                   }}
-                >+</li>
+                >
+                  +
+                </li>
               )}
             </ul>
             <h5
-              onClick={(e) => {
+              onClick={e => {
                 Menu.highlight(e.currentTarget)
                 this.props.setState({
                   mode: 'update',
                   path: [i],
                 })
               }}
-            >{group.name}</h5>
+            >
+              {group.name}
+            </h5>
           </li>
         ))}
         {this.props.buttons.length < 3 && (
           <li
             className={$.add}
-            onClick={(e) => {
+            onClick={e => {
               Menu.highlight(e.currentTarget)
               this.props.setState({
                 mode: 'add',
-                path: [this.props.buttons.length]
+                path: [this.props.buttons.length],
               })
             }}
-          ><b>+</b></li>
+          >
+            <b>+</b>
+          </li>
         )}
       </ul>
     )

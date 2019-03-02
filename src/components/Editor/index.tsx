@@ -1,17 +1,17 @@
-import * as React from 'react'
-import $ from './index.css'
+import React from 'react'
+import './index.scss'
 import Modal from '../Modal'
 
 interface Props {
   path: number[]
   buttons: Button[]
   mode: 'add' | 'update'
-  setState: (state: Partial<Pick<AppState, 'path' | 'buttons'>>) => void
+  setState: any
 }
 
 class Editor extends React.PureComponent<Props, {}> {
-  nameInput: HTMLInputElement
-  urlInput: HTMLInputElement
+  nameInput!: HTMLInputElement
+  urlInput!: HTMLInputElement
 
   remove = () => {
     const { buttons, path } = this.props
@@ -22,7 +22,9 @@ class Editor extends React.PureComponent<Props, {}> {
       newButtons = buttons.filter((_, _i) => _i !== i)
     } else if (path.length === 2) {
       newButtons = buttons.slice()
-      newButtons[i].sub_button = newButtons[i].sub_button.filter((_, _j) => _j !== j)
+      newButtons[i].sub_button = newButtons[i].sub_button.filter(
+        (_, _j) => _j !== j,
+      )
     }
 
     this.props.setState({
@@ -34,7 +36,8 @@ class Editor extends React.PureComponent<Props, {}> {
   confirmRemove = () => {
     const { buttons, path } = this.props
     const [i, j] = path
-    const name = path.length === 1 ? buttons[i].name : buttons[i].sub_button[j].name
+    const name =
+      path.length === 1 ? buttons[i].name : buttons[i].sub_button[j].name
 
     Modal.confirm({
       type: 'warning',
@@ -108,15 +111,12 @@ class Editor extends React.PureComponent<Props, {}> {
     const addMode = mode === 'add'
     const actions = (
       <div>
-        {addMode || <button
-          type="button"
-          onClick={this.confirmRemove}
-          className={$.del}
-        >删除</button>}
-        <button
-          type="submit"
-          className={addMode ? $.add : $.save}
-        >
+        {addMode || (
+          <button type="button" onClick={this.confirmRemove} className={$.del}>
+            删除
+          </button>
+        )}
+        <button type="submit" className={addMode ? $.add : $.save}>
           {addMode ? '新增' : '保存'}
         </button>
       </div>
@@ -128,7 +128,9 @@ class Editor extends React.PureComponent<Props, {}> {
             <label htmlFor="name">名称</label>
             <input
               name="name"
-              ref={(e) => { this.nameInput = e }}
+              ref={e => {
+                this.nameInput = e!
+              }}
               required
               defaultValue={addMode ? '' : buttons[i].name}
             />
@@ -141,7 +143,9 @@ class Editor extends React.PureComponent<Props, {}> {
             <label htmlFor="name">名称</label>
             <input
               name="name"
-              ref={(e) => { this.nameInput = e }}
+              ref={e => {
+                this.nameInput = e!
+              }}
               required
               defaultValue={addMode ? '' : buttons[i].sub_button[j].name}
             />
@@ -149,16 +153,17 @@ class Editor extends React.PureComponent<Props, {}> {
             <input
               type="url"
               name="url"
-              ref={(e) => { this.urlInput = e }}
+              ref={e => {
+                this.urlInput = e!
+              }}
               required
               defaultValue={addMode ? '' : buttons[i].sub_button[j].url}
             />
             {actions}
           </form>
         )
-      default: return (
-        <p className={$.default}>请在左侧面板中选择一个菜单项。</p>
-      )
+      default:
+        return <p className={$.default}>请在左侧面板中选择一个菜单项。</p>
     }
   }
 }

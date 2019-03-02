@@ -5,7 +5,7 @@
   top: 0;
   left: 0;
   z-index: 100;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal {
@@ -39,9 +39,9 @@
   }
 
   &.good {
-    border-color: #47CF73;
+    border-color: #47cf73;
     .confirm {
-      background-color: #47CF73;
+      background-color: #47cf73;
       &:hover {
         background-color: #2fb45a;
       }

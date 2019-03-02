@@ -1,17 +1,17 @@
-import * as React from 'react'
-import $ from './index.css'
+import React from 'react'
+import './index.scss'
 import { assertTypeIsButtons } from '../../utils'
 
 interface Props {
   getURL: string
   createURL: string
   isVisible: boolean
-  setState: (state: Partial<Pick<AppState, 'buttons' | 'getURL' | 'createURL' | 'isSettingsVisible'>>) => void
+  setState: any
 }
 
 class Settings extends React.PureComponent<Props, {}> {
-  getURLInput: HTMLInputElement
-  createURLInput: HTMLInputElement
+  getURLInput!: HTMLInputElement
+  createURLInput!: HTMLInputElement
 
   state = {
     error: '',
@@ -20,10 +20,9 @@ class Settings extends React.PureComponent<Props, {}> {
   }
 
   finish = (buttons?: Button[]) => {
-    location.hash = btoa(JSON.stringify([
-      this.getURLInput.value,
-      this.createURLInput.value,
-    ]))
+    location.hash = btoa(
+      JSON.stringify([this.getURLInput.value, this.createURLInput.value]),
+    )
     this.setState({
       error: '',
       isBusy: false,
@@ -43,18 +42,18 @@ class Settings extends React.PureComponent<Props, {}> {
     this.setState({ isBusy: true })
 
     fetch(this.getURLInput.value)
-    .then(res => res.json())
-    .then(json => {
-      assertTypeIsButtons(json)
-      this.finish(json.menu.button)
-    })
-    .catch((e: Error) => {
-      this.setState({
-        errorId: this.state.errorId + 1,
-        error: e.toString(),
-        isBusy: false,
+      .then(res => res.json())
+      .then(json => {
+        assertTypeIsButtons(json)
+        this.finish(json.menu.button)
       })
-    })
+      .catch((e: Error) => {
+        this.setState({
+          errorId: this.state.errorId + 1,
+          error: e.toString(),
+          isBusy: false,
+        })
+      })
   }
 
   submit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -63,7 +62,7 @@ class Settings extends React.PureComponent<Props, {}> {
       return
     }
 
-    if(!e.currentTarget.checkValidity()) {
+    if (!e.currentTarget.checkValidity()) {
       return
     }
 
@@ -93,23 +92,28 @@ class Settings extends React.PureComponent<Props, {}> {
             type="url"
             required
             defaultValue={this.props.getURL}
-            ref={(e) => { this.getURLInput = e }}
+            ref={e => {
+              this.getURLInput = e!
+            }}
           />
-          <label htmlFor="createURL">用来创建菜单的 URL
+          <label htmlFor="createURL">
+            用来创建菜单的 URL
             <small>(可稍后填写)</small>
           </label>
           <input
             name="createURL"
             type="url"
             defaultValue={this.props.createURL}
-            ref={(e) => { this.createURLInput = e }}
+            ref={e => {
+              this.createURLInput = e!
+            }}
           />
-          <button type="submit" disabled={this.state.isBusy}>{
-            this.state.isBusy ? '请求中...' : '保存'
-          }</button>
-          <p className={$.error} key={this.state.errorId}>{
-            this.state.error
-          }</p>
+          <button type="submit" disabled={this.state.isBusy}>
+            {this.state.isBusy ? '请求中...' : '保存'}
+          </button>
+          <p className={$.error} key={this.state.errorId}>
+            {this.state.error}
+          </p>
         </form>
       </div>
     )

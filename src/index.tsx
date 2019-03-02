@@ -1,15 +1,10 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 import App from './components/App'
 
-const root = document.getElementById('root')
-const render = () => {
-  ReactDOM.render(<AppContainer><App /></AppContainer>, root)
-}
+Object.defineProperty(window, '$', {
+  value: new Proxy({}, { get: (_, name) => name }),
+})
 
-render()
-if (module.hot) {
-  module.hot.accept("./components/App", render)
-}
+ReactDOM.render(<App />, document.getElementById('root'))

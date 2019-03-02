@@ -1,19 +1,19 @@
-@import "https://fonts.proxy.ustclug.org/css?family=Lato:400";
-
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-body, input, button {
+body,
+input,
+button {
   font-family: Lato;
 }
 body {
   background-color: #191919;
   color: #fff;
-	line-height: 1.5;
-	font-size: 15px;
-	font-weight: 400;
+  line-height: 1.5;
+  font-size: 15px;
+  font-weight: 400;
   width: 800px;
   margin: 0 auto;
 }
@@ -21,7 +21,9 @@ a {
   text-decoration: none;
   color: #76daff;
 
-  &:hover, &:focus, &:active {
+  &:hover,
+  &:focus,
+  &:active {
     cursor: pointer;
     color: white;
   }
@@ -44,37 +46,37 @@ label {
 input {
   margin-bottom: 24px;
   width: 100%;
-	font-size: 13px;
-	padding: 4px 5px 4px 5px;
-	outline: 0;
-	border: 3px solid #ccc;
-	border-radius: 2px;
-	transition: border-color 0.2s;
+  font-size: 13px;
+  padding: 4px 5px 4px 5px;
+  outline: 0;
+  border: 3px solid #ccc;
+  border-radius: 2px;
+  transition: border-color 0.2s;
 
   &:focus {
     border-color: #555;
   }
 }
 button {
-	font-size: 1rem;
-	text-shadow: none;
-	display: inline-block;
-	border: 0;
-	outline: 0;
-	padding: 10px 16px;
-	margin: 0 10px 0 0;
-	position: relative;
-	border-radius: 3px;
-	border: 3px solid transparent;
+  font-size: 1rem;
+  text-shadow: none;
+  display: inline-block;
+  border: 0;
+  outline: 0;
+  padding: 10px 16px;
+  margin: 0 10px 0 0;
+  position: relative;
+  border-radius: 3px;
+  border: 3px solid transparent;
   background: #ccc;
   color: #111;
-	cursor: pointer;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	text-decoration: none;
-	cursor: pointer;
-	text-align: center;
-	font-weight: normal;
+  cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  font-weight: normal;
 
   &:hover {
     background: #999;
