@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import './index.scss'
 
@@ -12,43 +12,37 @@ interface P {
   onConfirm?: () => void
 }
 
-export default class Modal extends React.PureComponent<P, {}> {
-  state = {
-    isVisible: true,
+export default function Modal(props: P) {
+  const [isVisible, setIsVisible] = useState(true)
+
+  function close() {
+    setIsVisible(false)
   }
 
-  close = () => {
-    this.setState({
-      isVisible: false,
-    })
-  }
-
-  render() {
-    return this.state.isVisible ? (
-      <div className={$.mask} onClick={this.close}>
-        <div
-          className={[$.modal, $[this.props.type || '']].join(' ')}
-          onClick={e => e.stopPropagation()}
-        >
-          <h1>{this.props.title}</h1>
-          <p>{this.props.body}</p>
-          <div className={$.buttons}>
-            <button
-              onClickCapture={this.close}
-              onClick={this.props.onConfirm}
-              className={$.confirm}
-            >
-              确定
-            </button>
-            {this.props.onConfirm && <button onClick={this.close}>取消</button>}
-          </div>
+  return isVisible ? (
+    <div className={$.mask} onClick={close}>
+      <div
+        className={[$.modal, $[props.type || '']].join(' ')}
+        onClick={e => e.stopPropagation()}
+      >
+        <h1>{props.title}</h1>
+        <p>{props.body}</p>
+        <div className={$.buttons}>
+          <button
+            onClickCapture={close}
+            onClick={props.onConfirm}
+            className={$.confirm}
+          >
+            确定
+          </button>
+          {props.onConfirm && <button onClick={close}>取消</button>}
         </div>
       </div>
-    ) : null
-  }
+    </div>
+  ) : null
+}
 
-  static key = 0
-  static confirm(props: P) {
-    ReactDOM.render(<Modal {...props} key={Modal.key++} />, root)
-  }
+Modal.key = 0
+Modal.confirm = (props: P) => {
+  ReactDOM.render(<Modal {...props} key={Modal.key++} />, root)
 }

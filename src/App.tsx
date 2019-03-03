@@ -1,40 +1,80 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.scss'
 import { Modal, Nav, Settings, Menu, Editor, Footer } from './components'
+import { hasNonNullableProp } from './utils'
 
-export default class extends React.PureComponent<{}, AppState> {
-  constructor(props: {}) {
-    super(props)
+interface LegacyAppState {
+  buttons: Button[]
+  path: number[]
+  mode: 'add' | 'update'
+  getURL: string
+  createURL: string
+  isSettingsVisible: boolean
+  isBusy: boolean
+  u: undefined
+  n: null
+  s: string | undefined
+}
 
+export default () => {
+  const [buttons, setButtons] = useState<Button[]>([])
+  const [path, setPath] = useState<number[]>([])
+  const [mode, setMode] = useState<'add' | 'update'>('update')
+  const [isSettingsVisible, setIsSettingsVisible] = useState(true)
+  const [isBusy, setIsBusy] = useState(false)
+  const [getURL, setGetURL] = useState(() => {
     const hash = location.hash.slice(1)
     let getURL = ''
     let createURL = ''
     try {
       ;[getURL, createURL] = JSON.parse(atob(hash))
     } catch (e) {}
+    return getURL
+  })
+  const [createURL, setCreateURL] = useState(() => {
+    const hash = location.hash.slice(1)
+    let getURL = ''
+    let createURL = ''
+    try {
+      ;[getURL, createURL] = JSON.parse(atob(hash))
+    } catch (e) {}
+    return createURL
+  })
 
-    this.state = {
-      buttons: [],
-      path: [],
-      mode: 'update',
-      getURL,
-      createURL,
-      isSettingsVisible: true,
-      isBusy: false,
+  function setState(patch: Partial<LegacyAppState>) {
+    if (hasNonNullableProp(patch, 'buttons')) {
+      setButtons(patch.buttons)
     }
-    this.setState = this.setState.bind(this)
+    if (hasNonNullableProp(patch, 'createURL')) {
+      setCreateURL(patch.createURL)
+    }
+    if (hasNonNullableProp(patch, 'getURL')) {
+      setGetURL(patch.getURL)
+    }
+    if (hasNonNullableProp(patch, 'isBusy')) {
+      setIsBusy(patch.isBusy)
+    }
+    if (hasNonNullableProp(patch, 'isSettingsVisible')) {
+      setIsSettingsVisible(patch.isSettingsVisible)
+    }
+    if (hasNonNullableProp(patch, 'mode')) {
+      setMode(patch.mode)
+    }
+    if (hasNonNullableProp(patch, 'path')) {
+      setPath(patch.path)
+    }
   }
 
-  save = () => {
-    this.setState({ isBusy: true })
+  function save() {
+    setState({ isBusy: true })
 
-    fetch(this.state.createURL, {
+    fetch(createURL, {
       method: 'POST',
-      body: JSON.stringify({ button: this.state.buttons }),
+      body: JSON.stringify({ button: buttons }),
     })
       .then(res => res.text())
       .then(body => {
-        this.setState({ isBusy: false })
+        setState({ isBusy: false })
         try {
           const json = JSON.parse(body)
           if (json.errmsg === 'ok') {
@@ -58,7 +98,7 @@ export default class extends React.PureComponent<{}, AppState> {
         }
       })
       .catch((e: Error) => {
-        this.setState({ isBusy: false })
+        setState({ isBusy: false })
         Modal.confirm({
           type: 'error',
           title: '可能是接口异常...',
@@ -67,9 +107,9 @@ export default class extends React.PureComponent<{}, AppState> {
       })
   }
 
-  confirmSave = () => {
-    if (!this.state.createURL) {
-      return this.setState({
+  function confirmSave() {
+    if (!createURL) {
+      return setState({
         isSettingsVisible: true,
       })
     }
@@ -80,58 +120,49 @@ export default class extends React.PureComponent<{}, AppState> {
       body: (
         <div>
           将提交
-          <pre>{JSON.stringify({ button: this.state.buttons })}</pre>至{' '}
-          <code>{this.state.createURL}</code>
+          <pre>{JSON.stringify({ button: buttons })}</pre>至{' '}
+          <code>{createURL}</code>
         </div>
       ),
-      onConfirm: this.save,
+      onConfirm: save,
     })
   }
 
-  render() {
-    return (
-      <div>
-        <Nav
-          isSettingsVisible={this.state.isSettingsVisible}
-          setState={this.setState}
-        />
+  return (
+    <div>
+      <Nav isSettingsVisible={isSettingsVisible} setState={setState} />
 
-        <Settings
-          getURL={this.state.getURL}
-          createURL={this.state.createURL}
-          isVisible={!this.state.getURL || this.state.isSettingsVisible}
-          setState={this.setState}
-        />
+      <Settings
+        getURL={getURL}
+        createURL={createURL}
+        isVisible={!getURL || isSettingsVisible}
+        setState={setState}
+      />
 
-        <div className={$.container}>
-          <div className={$.phone}>
-            <Menu buttons={this.state.buttons} setState={this.setState} />
-          </div>
-          <div className={$.panel}>
-            <Editor
-              key={this.state.mode + this.state.path}
-              buttons={this.state.buttons}
-              path={this.state.path}
-              mode={this.state.mode}
-              setState={this.setState}
-            />
-          </div>
+      <div className={$.container}>
+        <div className={$.phone}>
+          <Menu buttons={buttons} setState={setState} />
         </div>
-
-        <button
-          className={$.save}
-          onClick={this.confirmSave}
-          disabled={this.state.isBusy}
-        >
-          {this.state.createURL
-            ? this.state.isBusy
-              ? '提交中，请稍等...'
-              : '保存所有更改并提交'
-            : '请先填写用来创建菜单的 URL'}
-        </button>
-
-        <Footer />
+        <div className={$.panel}>
+          <Editor
+            key={mode + path}
+            buttons={buttons}
+            path={path}
+            mode={mode}
+            setState={setState}
+          />
+        </div>
       </div>
-    )
-  }
+
+      <button className={$.save} onClick={confirmSave} disabled={isBusy}>
+        {createURL
+          ? isBusy
+            ? '提交中，请稍等...'
+            : '保存所有更改并提交'
+          : '请先填写用来创建菜单的 URL'}
+      </button>
+
+      <Footer />
+    </div>
+  )
 }

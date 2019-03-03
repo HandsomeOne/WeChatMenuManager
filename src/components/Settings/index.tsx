@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './index.scss'
 import { assertTypeIsButtons } from '../../utils/'
 
@@ -9,56 +9,55 @@ interface P {
   setState: any
 }
 
-export default class extends React.PureComponent<P, {}> {
-  getURLInput!: HTMLInputElement
-  createURLInput!: HTMLInputElement
+export default (props: P) => {
+  const getURLInput = useRef<HTMLInputElement>(null)
+  const createURLInput = useRef<HTMLInputElement>(null)
 
-  state = {
-    error: '',
-    errorId: 0,
-    isBusy: false,
-  }
+  const [error, setError] = useState('')
+  const [errorId, setErrorId] = useState(0)
+  const [isBusy, setIsBusy] = useState(false)
 
-  finish = (buttons?: Button[]) => {
+  function finish(buttons?: Button[]) {
     location.hash = btoa(
-      JSON.stringify([this.getURLInput.value, this.createURLInput.value]),
+      JSON.stringify([
+        getURLInput.current!.value,
+        createURLInput.current!.value,
+      ]),
     )
-    this.setState({
-      error: '',
-      isBusy: false,
-    })
-    const state: Partial<AppState> = {
-      getURL: this.getURLInput.value,
-      createURL: this.createURLInput.value,
+    setError('')
+    setIsBusy(false)
+
+    const state = {
+      getURL: getURLInput.current!.value,
+      createURL: createURLInput.current!.value,
       isSettingsVisible: false,
+      buttons: undefined as Button[] | undefined,
     }
     if (buttons) {
       state.buttons = buttons
     }
-    this.props.setState(state)
+    props.setState(state)
   }
 
-  check = () => {
-    this.setState({ isBusy: true })
+  function check() {
+    setIsBusy(true)
 
-    fetch(this.getURLInput.value)
+    fetch(getURLInput.current!.value)
       .then(res => res.json())
       .then(json => {
         assertTypeIsButtons(json)
-        this.finish(json.menu.button)
+        finish(json.menu.button)
       })
       .catch((e: Error) => {
-        this.setState({
-          errorId: this.state.errorId + 1,
-          error: e.toString(),
-          isBusy: false,
-        })
+        setErrorId(errorId + 1)
+        setError(e.toString())
+        setIsBusy(false)
       })
   }
 
-  submit = (e: React.FormEvent<HTMLFormElement>) => {
+  function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (!this.getURLInput.value) {
+    if (!getURLInput.current!.value) {
       return
     }
 
@@ -66,56 +65,50 @@ export default class extends React.PureComponent<P, {}> {
       return
     }
 
-    if (this.state.error || this.getURLInput.value !== this.props.getURL) {
-      this.check()
+    if (error || getURLInput.current!.value !== props.getURL) {
+      check()
     } else {
-      this.finish()
+      finish()
     }
   }
 
-  componentDidMount() {
-    if (this.getURLInput.value) {
-      this.check()
+  useEffect(() => {
+    if (getURLInput.current!.value) {
+      check()
     }
-  }
+  }, [])
 
-  render() {
-    return (
-      <div
-        className={$.settings}
-        style={{ display: this.props.isVisible ? 'block' : 'none' }}
-      >
-        <form className={$.main} onSubmit={this.submit}>
-          <label htmlFor="getURL">用来获取菜单的 URL</label>
-          <input
-            name="getURL"
-            type="url"
-            required
-            defaultValue={this.props.getURL}
-            ref={e => {
-              this.getURLInput = e!
-            }}
-          />
-          <label htmlFor="createURL">
-            用来创建菜单的 URL
-            <small>(可稍后填写)</small>
-          </label>
-          <input
-            name="createURL"
-            type="url"
-            defaultValue={this.props.createURL}
-            ref={e => {
-              this.createURLInput = e!
-            }}
-          />
-          <button type="submit" disabled={this.state.isBusy}>
-            {this.state.isBusy ? '请求中...' : '保存'}
-          </button>
-          <p className={$.error} key={this.state.errorId}>
-            {this.state.error}
-          </p>
-        </form>
-      </div>
-    )
-  }
+  return (
+    <div
+      className={$.settings}
+      style={{ display: props.isVisible ? 'block' : 'none' }}
+    >
+      <form className={$.main} onSubmit={submit}>
+        <label htmlFor="getURL">用来获取菜单的 URL</label>
+        <input
+          name="getURL"
+          type="url"
+          required
+          defaultValue={props.getURL}
+          ref={getURLInput}
+        />
+        <label htmlFor="createURL">
+          用来创建菜单的 URL
+          <small>(可稍后填写)</small>
+        </label>
+        <input
+          name="createURL"
+          type="url"
+          defaultValue={props.createURL}
+          ref={createURLInput}
+        />
+        <button type="submit" disabled={isBusy}>
+          {isBusy ? '请求中...' : '保存'}
+        </button>
+        <p className={$.error} key={errorId}>
+          {error}
+        </p>
+      </form>
+    </div>
+  )
 }
