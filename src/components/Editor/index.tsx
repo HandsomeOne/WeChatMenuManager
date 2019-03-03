@@ -2,14 +2,14 @@ import React from 'react'
 import './index.scss'
 import Modal from '../Modal'
 
-interface Props {
+interface P {
   path: number[]
   buttons: Button[]
   mode: 'add' | 'update'
   setState: any
 }
 
-class Editor extends React.PureComponent<Props, {}> {
+export default class extends React.PureComponent<P, {}> {
   nameInput!: HTMLInputElement
   urlInput!: HTMLInputElement
 
@@ -167,5 +167,3 @@ class Editor extends React.PureComponent<Props, {}> {
     }
   }
 }
-
-export default Editor

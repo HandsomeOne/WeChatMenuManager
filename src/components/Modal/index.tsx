@@ -5,14 +5,14 @@ import './index.scss'
 const root = document.createElement('div')
 document.body.appendChild(root)
 
-interface Props {
+interface P {
   type?: 'warning' | 'error' | 'good' | 'info'
   title: React.ReactNode
   body: React.ReactNode
   onConfirm?: () => void
 }
 
-class Modal extends React.PureComponent<Props, {}> {
+export default class Modal extends React.PureComponent<P, {}> {
   state = {
     isVisible: true,
   }
@@ -48,9 +48,7 @@ class Modal extends React.PureComponent<Props, {}> {
   }
 
   static key = 0
-  static confirm(props: Props) {
+  static confirm(props: P) {
     ReactDOM.render(<Modal {...props} key={Modal.key++} />, root)
   }
 }
-
-export default Modal

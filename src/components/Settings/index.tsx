@@ -2,14 +2,14 @@ import React from 'react'
 import './index.scss'
 import { assertTypeIsButtons } from '../../utils/'
 
-interface Props {
+interface P {
   getURL: string
   createURL: string
   isVisible: boolean
   setState: any
 }
 
-class Settings extends React.PureComponent<Props, {}> {
+export default class extends React.PureComponent<P, {}> {
   getURLInput!: HTMLInputElement
   createURLInput!: HTMLInputElement
 
@@ -119,5 +119,3 @@ class Settings extends React.PureComponent<Props, {}> {
     )
   }
 }
-
-export default Settings

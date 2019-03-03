@@ -2,7 +2,7 @@ import React from 'react'
 import './App.scss'
 import { Modal, Nav, Settings, Menu, Editor, Footer } from './components'
 
-class App extends React.PureComponent<{}, AppState> {
+export default class extends React.PureComponent<{}, AppState> {
   constructor(props: {}) {
     super(props)
 
@@ -135,5 +135,3 @@ class App extends React.PureComponent<{}, AppState> {
     )
   }
 }
-
-export default App
